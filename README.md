@@ -40,31 +40,28 @@ pnpm preview
 
 ## 部署到 GitHub Pages
 
-### 方法一：使用 GitHub Actions（推荐）
+项目将部署到 `https://oasis-cloud.github.io/pets/`
 
-1. 确保仓库已启用 GitHub Pages：
-   - 进入仓库 Settings → Pages
-   - Source 选择 "GitHub Actions"
+### 部署步骤
 
-2. 推送代码到 main 分支，GitHub Actions 会自动构建并部署
-
-3. 访问：`https://你的用户名.github.io/仓库名/`
-
-### 方法二：手动部署
-
-1. 构建项目：
+1. 确保已安装依赖：
    ```bash
-   pnpm build
+   pnpm install
    ```
 
-2. 将 `dist` 目录的内容推送到 `gh-pages` 分支：
+2. 构建并部署到 GitHub Pages：
    ```bash
-   git subtree push --prefix dist origin gh-pages
+   pnpm deploy
    ```
-   或者使用 `gh-pages` 工具：
-   ```bash
-   npx gh-pages -d dist
-   ```
+
+   这个命令会：
+   - 构建项目到 `dist` 目录
+   - 将 `dist` 目录的内容推送到 `https://github.com/oasis-cloud/oasis-cloud.github.io.git` 仓库的 `main` 分支
+   - 文件会被部署到仓库的 `pets` 目录
+
+3. 访问网站：
+   - 主页面：`https://oasis-cloud.github.io/pets/`
+   - 列表页：`https://oasis-cloud.github.io/pets/#/list`
 
 ## 项目结构
 
@@ -84,10 +81,10 @@ pnpm preview
 ## 路由说明
 
 由于使用 HashRouter，所有路由都会以 `#` 开头：
-- `/#/` - 注册页面
-- `/#/list` - 列表页面
-- `/#/fish/:id` - 详情页面
-- `/#/edit/:id` - 编辑页面
+- `https://oasis-cloud.github.io/pets/#/` - 注册页面
+- `https://oasis-cloud.github.io/pets/#/list` - 列表页面
+- `https://oasis-cloud.github.io/pets/#/fish/:id` - 详情页面
+- `https://oasis-cloud.github.io/pets/#/edit/:id` - 编辑页面
 
 ## 数据存储
 

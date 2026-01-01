@@ -16,7 +16,7 @@ export default defineConfig({
     host: "0.0.0.0", // 允许通过 IP 访问
     port: 5173, // 默认端口
   },
-  base: "./", // 使用相对路径，适合 GitHub Pages
+  base: "/fish/", // 部署到 fish 子目录
   build: {
     outDir: "dist",
   },
