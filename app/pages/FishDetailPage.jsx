@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "@remix-run/react";
+import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "~/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "~/components/ui/card";
 import { getPetById } from "~/lib/storage";
@@ -89,7 +89,6 @@ export default function FishDetailPage() {
                 pet.isDead ? "bg-gray-300" : "bg-blue-100"
               }`}>
                 <div className={`${pet.isDead ? "text-gray-600" : "text-blue-600"}`}>
-                  {/* {getCategoryIcon(pet.category)} */}
                   <div className="text-6xl">
                     {pet.category === "鱼类" ? "🐟" : "🐢"}
                   </div>

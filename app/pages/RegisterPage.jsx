@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "@remix-run/react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Select } from "~/components/ui/select";
@@ -261,81 +261,6 @@ export default function RegisterPage() {
                   onChange={(e) => setFormData({ ...formData, arrivalDate: e.target.value })}
                 />
               </div>
-
-              {/* 产卵日期 */}
-              {/* <div>
-                <label className="block text-sm font-medium mb-2">产卵日期</label>
-                <div className="flex gap-2 mb-2 items-center">
-                  <Input
-                    type="date"
-                    value={newSpawnDate}
-                    onChange={(e) => setNewSpawnDate(e.target.value)}
-                    placeholder="选择产卵日期"
-                    className="flex-1"
-                  />
-                  <Button type="button" onClick={addSpawnDate} className="shrink-0 whitespace-nowrap">
-                    <Plus className="h-4 w-4 mr-2" />
-                    添加
-                  </Button>
-                </div>
-                {formData.spawnDates.length > 0 && (
-                  <div className="space-y-2">
-                    {formData.spawnDates.map((date, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center justify-between bg-gray-50 p-2 rounded"
-                      >
-                        <span>{date}</span>
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => removeSpawnDate(index)}
-                        >
-                          <X className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div> */}
-
-              {/* 生病记录 */}
-              {/* <div>
-                <label className="block text-sm font-medium mb-2">生病记录</label>
-                <div className="flex gap-2 mb-2 items-center">
-                  <Input
-                    value={newIllness}
-                    onChange={(e) => setNewIllness(e.target.value)}
-                    placeholder="请输入生病记录"
-                    className="flex-1"
-                  />
-                  <Button type="button" onClick={addIllness} className="shrink-0 whitespace-nowrap">
-                    <Plus className="h-4 w-4 mr-2" />
-                    添加
-                  </Button>
-                </div>
-                {formData.illnesses.length > 0 && (
-                  <div className="space-y-2">
-                    {formData.illnesses.map((illness, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center justify-between bg-gray-50 p-2 rounded"
-                      >
-                        <span>{illness}</span>
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => removeIllness(index)}
-                        >
-                          <X className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div> */}
 
               {/* 提交按钮 */}
               <div className="flex gap-4 pt-4">

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "@remix-run/react";
+import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Select } from "~/components/ui/select";
@@ -241,7 +241,7 @@ export default function EditPage() {
                     </div>
                   </div>
                   {formData.image && (
-                    <div className="flex-shrink-0">
+                    <div className="shrink-0">
                       <img
                         src={formData.image}
                         alt="头像预览"
@@ -285,33 +285,6 @@ export default function EditPage() {
                 />
               </div>
 
-              {/* 死亡状态 */}
-              {/* <div>
-                <label className="block text-sm font-medium mb-2">状态</label>
-                <div className="flex gap-4">
-                  <Button
-                    type="button"
-                    variant={!formData.isDead ? "default" : "outline"}
-                    onClick={() => setFormData({ ...formData, isDead: false, deathDate: "" })}
-                    className="flex-1"
-                  >
-                    存活
-                  </Button>
-                  <Button
-                    type="button"
-                    variant={formData.isDead ? "default" : "outline"}
-                    onClick={() => setFormData({ 
-                      ...formData, 
-                      isDead: true, 
-                      deathDate: formData.deathDate || new Date().toISOString().split("T")[0] 
-                    })}
-                    className={`flex-1 ${formData.isDead ? "bg-red-600 hover:bg-red-700" : ""}`}
-                  >
-                    已故
-                  </Button>
-                </div>
-              </div> */}
-
               {/* 死亡日期 - 仅在标记为已故时显示 */}
               {formData.isDead && (
                 <div>
@@ -335,7 +308,7 @@ export default function EditPage() {
                     placeholder="选择产卵日期"
                     className="flex-1"
                   />
-                  <Button type="button" onClick={addSpawnDate} className="flex-shrink-0 whitespace-nowrap">
+                  <Button type="button" onClick={addSpawnDate} className="shrink-0 whitespace-nowrap">
                     <Plus className="h-4 w-4 mr-2" />
                     添加
                   </Button>
@@ -372,7 +345,7 @@ export default function EditPage() {
                     placeholder="请输入生病记录"
                     className="flex-1"
                   />
-                  <Button type="button" onClick={addIllness} className="flex-shrink-0 whitespace-nowrap">
+                  <Button type="button" onClick={addIllness} className="shrink-0 whitespace-nowrap">
                     <Plus className="h-4 w-4 mr-2" />
                     添加
                   </Button>

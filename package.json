@@ -5,30 +5,27 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "remix vite:dev",
-    "build": "remix vite:build",
-    "preview": "remix-serve build/server/index.js"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.20.0",
   "dependencies": {
-    "@remix-run/node": "^2.17.2",
-    "@remix-run/react": "^2.17.2",
-    "@remix-run/serve": "^2.17.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
-    "isbot": "^4.4.0",
     "lucide-react": "^0.562.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.0",
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
-    "@remix-run/dev": "^2.17.2",
     "@tailwindcss/postcss": "^4.1.18",
+    "@vitejs/plugin-react": "^5.1.2",
     "autoprefixer": "^10.4.23",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.18",
