@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "@remix-run/react";
+import { Link, useNavigate, useLocation } from "@remix-run/react";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent } from "~/components/ui/card";
 import {
@@ -13,9 +13,11 @@ import {
 import { getAllPets, updatePet, deletePet } from "~/lib/storage";
 import { formatDate, calculateDays, formatDays } from "~/lib/date-utils";
 import { Plus, Fish, Turtle, Edit, Heart, Trash2, Waves } from "lucide-react";
+import { InstallPrompt } from "~/components/install-prompt";
 
 export default function ListPage() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [pets, setPets] = useState([]);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [petToDelete, setPetToDelete] = useState(null);
@@ -37,6 +39,11 @@ export default function ListPage() {
       window.removeEventListener("storage", handleStorageChange);
     };
   }, []);
+
+  // 当路由变化到列表页时，滚动到顶部
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [location.pathname]);
 
   const getCategoryIcon = (category) => {
     return category === "鱼类" ? (
@@ -334,6 +341,9 @@ export default function ListPage() {
             </DialogFooter>
           </DialogContent>
         </Dialog>
+
+        {/* PWA 安装提示 */}
+        <InstallPrompt />
       </div>
     </div>
   );

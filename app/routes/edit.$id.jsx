@@ -125,7 +125,7 @@ export default function EditPage() {
               <CardTitle>修改宠物信息</CardTitle>
               <Button
                 variant="ghost"
-                onClick={() => navigate(`/list`)}
+                onClick={() => navigate(`/fish/${id}`)}
                 className="h-8 w-8 p-0"
               >
                 <X className="h-4 w-4" />

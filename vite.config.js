@@ -6,7 +6,13 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
-  plugins: [remix()],
+  plugins: [
+    remix({
+      future: {
+        v3_fetcherPersist: true,
+      },
+    }),
+  ],
   resolve: {
     alias: {
       "~": path.resolve(__dirname, "./app"),
