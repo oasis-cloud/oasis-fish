@@ -40,7 +40,7 @@ pnpm preview
 
 ## 部署到 GitHub Pages
 
-项目将部署到 `https://oasis-cloud.github.io/pets/`
+项目将部署到 `https://oasis-cloud.github.io/fish/`
 
 ### 部署步骤
 
@@ -57,11 +57,12 @@ pnpm preview
    这个命令会：
    - 构建项目到 `dist` 目录
    - 将 `dist` 目录的内容推送到 `https://github.com/oasis-cloud/oasis-cloud.github.io.git` 仓库的 `main` 分支
-   - 文件会被部署到仓库的 `pets` 目录
+   - 文件会被部署到仓库的 `fish` 目录
 
 3. 访问网站：
-   - 主页面：`https://oasis-cloud.github.io/pets/`
-   - 列表页：`https://oasis-cloud.github.io/pets/#/list`
+   - 主页面（列表页）：`https://oasis-cloud.github.io/fish/`
+   - 注册页：`https://oasis-cloud.github.io/fish/#/register`
+   - 列表页：`https://oasis-cloud.github.io/fish/#/list`
 
 ## 项目结构
 
@@ -81,10 +82,11 @@ pnpm preview
 ## 路由说明
 
 由于使用 HashRouter，所有路由都会以 `#` 开头：
-- `https://oasis-cloud.github.io/pets/#/` - 注册页面
-- `https://oasis-cloud.github.io/pets/#/list` - 列表页面
-- `https://oasis-cloud.github.io/pets/#/fish/:id` - 详情页面
-- `https://oasis-cloud.github.io/pets/#/edit/:id` - 编辑页面
+- `https://oasis-cloud.github.io/fish/#/` - 列表页面（默认）
+- `https://oasis-cloud.github.io/fish/#/register` - 注册页面
+- `https://oasis-cloud.github.io/fish/#/list` - 列表页面
+- `https://oasis-cloud.github.io/fish/#/fish/:id` - 详情页面
+- `https://oasis-cloud.github.io/fish/#/edit/:id` - 编辑页面
 
 ## 数据存储
 

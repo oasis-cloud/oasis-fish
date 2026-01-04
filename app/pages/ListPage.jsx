@@ -12,7 +12,7 @@ import {
 } from "~/components/ui/dialog";
 import { getAllPets, updatePet, deletePet } from "~/lib/storage";
 import { formatDate, calculateDays, formatDays } from "~/lib/date-utils";
-import { Plus, Fish, Turtle, Edit, Heart, Trash2, Waves } from "lucide-react";
+import { Plus, Fish, Turtle, Edit, Heart, Trash2, Waves, Download, Upload } from "lucide-react";
 import { InstallPrompt } from "~/components/install-prompt";
 
 export default function ListPage() {
@@ -23,6 +23,8 @@ export default function ListPage() {
   const [petToDelete, setPetToDelete] = useState(null);
   const [releaseDialogOpen, setReleaseDialogOpen] = useState(false);
   const [petToRelease, setPetToRelease] = useState(null);
+  const [importDialogOpen, setImportDialogOpen] = useState(false);
+  const [importFile, setImportFile] = useState(null);
 
   const loadPets = () => {
     setPets(getAllPets());
@@ -107,15 +109,132 @@ export default function ListPage() {
     setPetToRelease(null);
   };
 
+  // 导出数据
+  const handleExport = () => {
+    const pets = getAllPets();
+    const dataStr = JSON.stringify(pets, null, 2);
+    const dataBlob = new Blob([dataStr], { type: "application/json" });
+    const url = URL.createObjectURL(dataBlob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `oasis-fish-pets-${new Date().toISOString().split("T")[0]}.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    alert("数据导出成功！");
+  };
+
+  // 处理文件选择
+  const handleFileSelect = (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.type === "application/json" || file.name.endsWith(".json")) {
+        setImportFile(file);
+        setImportDialogOpen(true);
+      } else {
+        alert("请选择 JSON 格式的文件");
+      }
+    }
+  };
+
+  // 导入数据
+  const handleImport = () => {
+    if (!importFile) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const importedData = JSON.parse(e.target.result);
+        
+        // 验证数据格式
+        if (!Array.isArray(importedData)) {
+          alert("导入失败：数据格式不正确，应为数组格式");
+          return;
+        }
+
+        // 验证每个宠物对象的基本字段
+        const isValid = importedData.every(
+          (pet) => pet.id && pet.name && pet.category && pet.source && pet.breed
+        );
+
+        if (!isValid) {
+          alert("导入失败：数据格式不正确，缺少必要字段");
+          return;
+        }
+
+        // 保存到 localStorage
+        const STORAGE_KEY = "oasis-fish-pets";
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(importedData));
+        
+        // 重新加载列表
+        loadPets();
+        setImportDialogOpen(false);
+        setImportFile(null);
+        
+        // 重置文件输入
+        const fileInput = document.getElementById("import-file-input");
+        if (fileInput) {
+          fileInput.value = "";
+        }
+        
+        alert(`成功导入 ${importedData.length} 条宠物记录！`);
+      } catch (error) {
+        alert("导入失败：文件格式错误，无法解析 JSON");
+        console.error("Import error:", error);
+      }
+    };
+    reader.readAsText(importFile);
+  };
+
+  const handleImportCancel = () => {
+    setImportDialogOpen(false);
+    setImportFile(null);
+    const fileInput = document.getElementById("import-file-input");
+    if (fileInput) {
+      fileInput.value = "";
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4">
       <div className="max-w-4xl mx-auto">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
           <h1 className="text-3xl font-bold">我的宠物</h1>
-          <Button onClick={() => navigate("/")}>
-            <Plus className="h-4 w-4 mr-2" />
-            添加宠物
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              onClick={handleExport}
+              className="flex items-center gap-2"
+            >
+              <Download className="h-4 w-4" />
+              导出数据
+            </Button>
+            <label className="cursor-pointer">
+              <input
+                id="import-file-input"
+                type="file"
+                accept=".json,application/json"
+                className="hidden"
+                onChange={handleFileSelect}
+              />
+              <Button
+                variant="outline"
+                type="button"
+                className="flex items-center gap-2"
+                onClick={() => {
+                  document.getElementById("import-file-input")?.click();
+                }}
+              >
+                <Upload className="h-4 w-4" />
+                导入数据
+              </Button>
+            </label>
+            <Button onClick={() => navigate("/register")}>
+              <Plus className="h-4 w-4 mr-2" />
+              添加宠物
+            </Button>
+          </div>
         </div>
 
         {pets.length === 0 ? (
@@ -337,6 +456,34 @@ export default function ListPage() {
                 className="bg-green-600 hover:bg-green-700"
               >
                 确认放生
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
+        {/* 导入确认对话框 */}
+        <Dialog open={importDialogOpen} onOpenChange={setImportDialogOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>确认导入数据</DialogTitle>
+              <DialogDescription>
+                导入数据将覆盖当前所有宠物记录，此操作无法撤销。
+                <br />
+                文件：{importFile?.name}
+                <br />
+                确定要继续吗？
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <Button variant="outline" onClick={handleImportCancel}>
+                取消
+              </Button>
+              <Button
+                variant="default"
+                onClick={handleImport}
+                className="bg-blue-600 hover:bg-blue-700"
+              >
+                确认导入
               </Button>
             </DialogFooter>
           </DialogContent>
